@@ -79,7 +79,6 @@
     notepadqq
     vlc
     htop
-    spotify
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -125,11 +124,12 @@
 
     # these should be self explanatory
     gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
-    gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-screenshot
+    gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos
     gnome-weather gnome-disk-utility pkgs.gnome-connections
     
     #keeping those
-    gnome-system-monitor 
+    #gnome-system-monitor
+    #gnome-screenshot
  ];
 
   #intel graphics 
