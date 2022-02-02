@@ -172,8 +172,10 @@
 
   #enable trackpoint driver
   hardware.trackpoint.enable = true;
-  lib.mkDefault = true;
+  hardware.trackpoint.emulateWheel = true;
 
+  #disable wayland
+  services.xserver.displayManager.gdm.wayland = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
