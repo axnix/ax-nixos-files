@@ -14,31 +14,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #intel graphics 
-  #https://nixos.wiki/wiki/Intel_Graphics
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
-
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
-
-  #enable driver for trackpoint
-  #^m^aking the trackpoint buttons, especially the left one, work normal 
-  hardware.trackpoint.enable = true;
-  lib.mkDefault = true;
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -63,30 +43,6 @@
 
   # Enable the X11 windowing system.
   #services.xserver.enable = true;  
-
-  #left mouse button fix (touchpad,p14, obsulete?)
-  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
-
-  #disable mouse acc
-  services.xserver = {
-    enable = true;
-
-    libinput = {
-      enable = true;
-
-      # disabling mouse acceleration
-      mouse = {
-        accelProfile = "flat";
-      };
-
-      # disabling touchpad acceleration
-      touchpad = {
-        accelProfile = "flat";
-      };
-    };
-
-  };
-
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -123,6 +79,7 @@
     notepadqq
     vlc
     htop
+    spotify
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -144,6 +101,14 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # C
+  #  U
+  #   S
+  #    T
+  #     O
+  #      M
+
+  #disable gnome bloatware
   environment.gnome.excludePackages = with pkgs.gnome; [
     baobab      # disk usage analyzer
     cheese      # photo booth
@@ -166,6 +131,49 @@
     #keeping those
     gnome-system-monitor 
  ];
+
+  #intel graphics 
+  #https://nixos.wiki/wiki/Intel_Graphics
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
+  #left mouse button fix
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
+
+  #disable mouse acc
+  services.xserver = {
+    enable = true;
+
+    libinput = {
+      enable = true;
+
+      # disabling mouse acceleration
+      mouse = {
+        accelProfile = "flat";
+      };
+
+      # disabling touchpad acceleration
+      touchpad = {
+        accelProfile = "flat";
+      };
+    };
+
+  };
+
+  #enable trackpoint driver
+  hardware.trackpoint.enable = true;
+  lib.mkDefault = true;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
