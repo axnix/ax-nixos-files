@@ -1,3 +1,5 @@
+sudo -i
+
 parted /dev/nvme0n1 -- mklabel gpt
 parted /dev/nvme0n1 -- mkpart primary 512MiB -8GiB
 parted /dev/nvme0n1 -- mkpart primary linux-swap -8GiB 100%
@@ -14,3 +16,6 @@ mkdir -p /mnt/boot
 mount /dev/disk/by-label/boot /mnt/boot
 
 swapon /dev/nvme0n1p2
+
+nixos-generate-config --root /mnt
+nano /mnt/etc/nixos/configuration.nix
